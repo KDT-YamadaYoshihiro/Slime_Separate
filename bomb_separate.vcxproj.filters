@@ -19,6 +19,12 @@
     <Filter Include="ヘッダー ファイル\system">
       <UniqueIdentifier>{56aa83c1-f830-4d92-9008-4b06620358c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\screen">
+      <UniqueIdentifier>{6830da04-7f86-4054-b4ea-aecbd3117691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\screen">
+      <UniqueIdentifier>{dabeb8f4-ac56-4a91-a6a5-6c9d29b64bee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csr\Game.h">
@@ -27,6 +33,18 @@
     <ClInclude Include="csr\Manager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="csr\Title.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="csr\Ingame.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="csr\Result.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="csr\ScreenBase.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="csr\Game.cpp">
@@ -34,6 +52,18 @@
     </ClCompile>
     <ClCompile Include="csr\Manager.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="csr\Title.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="csr\Ingame.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="csr\Result.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="csr\ScreenBase.cpp">
+      <Filter>ソース ファイル\screen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
