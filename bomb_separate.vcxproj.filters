@@ -25,12 +25,15 @@
     <Filter Include="ソース ファイル\screen">
       <UniqueIdentifier>{dabeb8f4-ac56-4a91-a6a5-6c9d29b64bee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Character">
+      <UniqueIdentifier>{8f10f612-679d-480f-bb4b-0ce2b137e58c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csr\Game.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="csr\Manager.h">
+    <ClInclude Include="csr\GameManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="csr\Title.h">
@@ -45,12 +48,18 @@
     <ClInclude Include="csr\ScreenBase.h">
       <Filter>ヘッダー ファイル\screen</Filter>
     </ClInclude>
+    <ClInclude Include="csr\mouse.h">
+      <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="csr\DrawImage.h">
+      <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="csr\Game.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="csr\Manager.cpp">
+    <ClCompile Include="csr\GameManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="csr\Title.cpp">

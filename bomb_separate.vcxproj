@@ -139,9 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="csr\DrawImage.h" />
     <ClInclude Include="csr\Game.h" />
     <ClInclude Include="csr\Ingame.h" />
-    <ClInclude Include="csr\Manager.h" />
+    <ClInclude Include="csr\GameManager.h" />
+    <ClInclude Include="csr\mouse.h" />
     <ClInclude Include="csr\Result.h" />
     <ClInclude Include="csr\ScreenBase.h" />
     <ClInclude Include="csr\Title.h" />
@@ -149,7 +151,7 @@
   <ItemGroup>
     <ClCompile Include="csr\Game.cpp" />
     <ClCompile Include="csr\Ingame.cpp" />
-    <ClCompile Include="csr\Manager.cpp" />
+    <ClCompile Include="csr\GameManager.cpp" />
     <ClCompile Include="csr\Result.cpp" />
     <ClCompile Include="csr\ScreenBase.cpp" />
     <ClCompile Include="csr\Title.cpp" />
