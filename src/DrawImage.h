@@ -22,13 +22,13 @@ public:
 
 	// 初期化座標指定
 	DrawImage(int arg_pos_x, int arg_pos_y)
-		:m_pos_x(arg_pos_x), m_pos_y(arg_pos_y), m_handle(-1) 
+		:m_pos_x(arg_pos_x), m_pos_y(arg_pos_y), m_size_x(0), m_size_y(0), m_handle(-1)
 	{
 	}
 
 	// 初期化座標、画像指定
 	DrawImage(int arg_pos_x, int arg_pos_y, int arg_handle)
-		:m_pos_x(arg_pos_x), m_pos_y(arg_pos_y), m_handle(arg_handle)
+		:m_pos_x(arg_pos_x), m_pos_y(arg_pos_y), m_size_x(0), m_size_y(0), m_handle(arg_handle)
 	{
 	}
 

@@ -25,8 +25,14 @@
     <Filter Include="ソース ファイル\screen">
       <UniqueIdentifier>{dabeb8f4-ac56-4a91-a6a5-6c9d29b64bee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Character">
+    <Filter Include="ヘッダー ファイル\Bomb">
       <UniqueIdentifier>{8f10f612-679d-480f-bb4b-0ce2b137e58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bomb">
+      <UniqueIdentifier>{d7d57788-ed78-4eeb-b8a4-c80d19c73f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Stage">
+      <UniqueIdentifier>{8bab3361-056d-4147-b595-80c90f46b1cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -51,8 +57,20 @@
     <ClInclude Include="csr\mouse.h">
       <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
-    <ClInclude Include="csr\DrawImage.h">
+    <ClInclude Include="src\Bomb.h">
+      <Filter>ヘッダー ファイル\Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="src\enum.h">
       <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DrawImage.h">
+      <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Stage.h">
+      <Filter>ヘッダー ファイル\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RegionBox.h">
+      <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="csr\ScreenBase.cpp">
       <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bomb.cpp">
+      <Filter>ソース ファイル\Bomb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="csr\DrawImage.h" />
     <ClInclude Include="csr\Game.h" />
     <ClInclude Include="csr\Ingame.h" />
     <ClInclude Include="csr\GameManager.h" />
@@ -147,6 +146,11 @@
     <ClInclude Include="csr\Result.h" />
     <ClInclude Include="csr\ScreenBase.h" />
     <ClInclude Include="csr\Title.h" />
+    <ClInclude Include="src\DrawImage.h" />
+    <ClInclude Include="src\Bomb.h" />
+    <ClInclude Include="src\enum.h" />
+    <ClInclude Include="src\RegionBox.h" />
+    <ClInclude Include="src\Stage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="csr\Game.cpp" />
@@ -155,6 +159,7 @@
     <ClCompile Include="csr\Result.cpp" />
     <ClCompile Include="csr\ScreenBase.cpp" />
     <ClCompile Include="csr\Title.cpp" />
+    <ClCompile Include="src\Bomb.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
