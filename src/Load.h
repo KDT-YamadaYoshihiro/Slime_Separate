@@ -8,7 +8,7 @@ class Load {
 	// コンストラクタ
 	// 初期化
 	Load() {
-		bg = LoadGraph("data/bg/bg.jpg");
+		bg = LoadGraph("data/bg/bg.png");
 	};
 
 public:
