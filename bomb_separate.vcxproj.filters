@@ -36,27 +36,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="csr\Game.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="csr\GameManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="csr\Title.h">
-      <Filter>ヘッダー ファイル\screen</Filter>
-    </ClInclude>
-    <ClInclude Include="csr\Ingame.h">
-      <Filter>ヘッダー ファイル\screen</Filter>
-    </ClInclude>
-    <ClInclude Include="csr\Result.h">
-      <Filter>ヘッダー ファイル\screen</Filter>
-    </ClInclude>
-    <ClInclude Include="csr\ScreenBase.h">
-      <Filter>ヘッダー ファイル\screen</Filter>
-    </ClInclude>
-    <ClInclude Include="csr\mouse.h">
-      <Filter>ヘッダー ファイル\system</Filter>
-    </ClInclude>
     <ClInclude Include="src\Bomb.h">
       <Filter>ヘッダー ファイル\Bomb</Filter>
     </ClInclude>
@@ -72,28 +51,52 @@
     <ClInclude Include="src\RegionBox.h">
       <Filter>ヘッダー ファイル\Stage</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ingame.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Result.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScreenBase.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Title.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mouse.h">
+      <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ScreenManager.h">
+      <Filter>ヘッダー ファイル\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Load.h">
+      <Filter>ヘッダー ファイル\system</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="csr\Game.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="csr\GameManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="csr\Title.cpp">
-      <Filter>ソース ファイル\screen</Filter>
-    </ClCompile>
-    <ClCompile Include="csr\Ingame.cpp">
-      <Filter>ソース ファイル\screen</Filter>
-    </ClCompile>
-    <ClCompile Include="csr\Result.cpp">
-      <Filter>ソース ファイル\screen</Filter>
-    </ClCompile>
-    <ClCompile Include="csr\ScreenBase.cpp">
-      <Filter>ソース ファイル\screen</Filter>
-    </ClCompile>
     <ClCompile Include="src\Bomb.cpp">
       <Filter>ソース ファイル\Bomb</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ingame.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Result.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Title.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScreenBase.cpp">
+      <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ScreenManager.cpp">
+      <Filter>ソース ファイル\screen</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

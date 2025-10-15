@@ -139,27 +139,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="csr\Game.h" />
-    <ClInclude Include="csr\Ingame.h" />
-    <ClInclude Include="csr\GameManager.h" />
-    <ClInclude Include="csr\mouse.h" />
-    <ClInclude Include="csr\Result.h" />
-    <ClInclude Include="csr\ScreenBase.h" />
-    <ClInclude Include="csr\Title.h" />
     <ClInclude Include="src\DrawImage.h" />
     <ClInclude Include="src\Bomb.h" />
     <ClInclude Include="src\enum.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Load.h" />
+    <ClInclude Include="src\ScreenManager.h" />
+    <ClInclude Include="src\Ingame.h" />
+    <ClInclude Include="src\mouse.h" />
     <ClInclude Include="src\RegionBox.h" />
+    <ClInclude Include="src\Result.h" />
+    <ClInclude Include="src\ScreenBase.h" />
     <ClInclude Include="src\Stage.h" />
+    <ClInclude Include="src\Title.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="csr\Game.cpp" />
-    <ClCompile Include="csr\Ingame.cpp" />
-    <ClCompile Include="csr\GameManager.cpp" />
-    <ClCompile Include="csr\Result.cpp" />
-    <ClCompile Include="csr\ScreenBase.cpp" />
-    <ClCompile Include="csr\Title.cpp" />
     <ClCompile Include="src\Bomb.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\ScreenManager.cpp" />
+    <ClCompile Include="src\Ingame.cpp" />
+    <ClCompile Include="src\Result.cpp" />
+    <ClCompile Include="src\ScreenBase.cpp" />
+    <ClCompile Include="src\Title.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

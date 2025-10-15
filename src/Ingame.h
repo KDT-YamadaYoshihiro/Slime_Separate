@@ -2,8 +2,10 @@
 #include "ScreenBase.h"
 
 class Ingame : public ScreenBase {
+
+
 public:
-	Ingame() = default;
+	Ingame();
 	virtual ~Ingame() = default;
 	// ‰Šú‰»
 	void Init() override;

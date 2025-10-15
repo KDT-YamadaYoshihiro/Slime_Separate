@@ -6,8 +6,10 @@
 // ゲームループクラス
 class CGame {
 
-	const int WINDOW_W = 800;
-	const int WINDOW_H = 400;
+	// windowサイズ
+	const int M_WINDOW_W = 1280;
+	const int M_WINDOW_H = 720;
+
 
 	// コンストラクタ
 	CGame() = default;
@@ -35,6 +37,7 @@ public:
 	// 終了
 	void End();
 
-	int getWindowW() const { return WINDOW_W; }
-	int getWindowH() const { return WINDOW_H; }
+	int GetWindowSizeW() const { return M_WINDOW_W; }
+	int GetWindowSizeH() const { return M_WINDOW_H; }
+
 };

@@ -1,17 +1,17 @@
 #include "Game.h"
-#include "Manager.h"
+#include "ScreenManager.h"
 
 
 // 初期化処理
 bool CGame::Init()
 {
 	SetOutApplicationLogValidFlag(FALSE);
-	ChangeWindowMode(Manager::Instance().getWindowMode());
-	SetGraphMode(getWindowW(), getWindowH(), 32);
+	ChangeWindowMode(ScreenManager::Instance().GetWindowMode());
+	SetGraphMode(M_WINDOW_W, M_WINDOW_H, 32);
 	
-	if (Manager::Instance().getWindowMode() == TRUE)
+	if (ScreenManager::Instance().GetWindowMode() == TRUE)
 	{
-		SetWindowSize(getWindowW(), getWindowH());
+		SetWindowSize(M_WINDOW_W, M_WINDOW_H);
 	}
 	
 	SetBackgroundColor(0, 0, 0);
@@ -20,7 +20,7 @@ bool CGame::Init()
 
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	Manager::Instance().Init();
+	ScreenManager::Instance().Init();
 
 }
 // ループ処理
@@ -47,13 +47,13 @@ void CGame::Run()
 // 更新処理
 void CGame::Update()
 {
-	Manager::Instance().Update();
+	ScreenManager::Instance().Update();
 }
 
 // 描画処理
 void CGame::Render()
 {
-	Manager::Instance().Render();
+	ScreenManager::Instance().Render();
 }
 
 // 終了処理
