@@ -14,6 +14,9 @@ class ObjectPool {
     // 
     std::stack<T*> free_;
 
+    void Release(T* obj) { free_.push(obj); }
+
+
 public:
     explicit ObjectPool(size_t capacity) {
         objects_.reserve(capacity);
@@ -30,14 +33,30 @@ public:
     // ========================
 
     PoolHandle<T> Acquire() {
-        if (free_.empty()) throw std::runtime_error("empty");
+
+        // 
+        if (free_.empty()){
+            throw std::runtime_error("empty");
+        }
+
         T* obj = free_.top();
         free_.pop();
         return PoolHandle<T>(obj, this);
+
+        //if (free_.empty()) {
+        //    // —á: 2”{‚ÉŠg’£
+        //    size_t addCount = std::max<size_t>(1, objects_.size());
+        //    for (size_t i = 0; i < addCount; ++i) {
+        //        objects_.emplace_back(std::make_unique<T>());
+        //        free_.push(objects_.back().get());
+        //    }
+        //}
+
+        //T* obj = free_.top();
+        //free_.pop();
+        //return PoolHandle<T>(obj, this);
+
+
     }
 
-    // 
-
-private:
-    void Release(T* obj) { free_.push(obj); }
 };

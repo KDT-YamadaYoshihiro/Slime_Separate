@@ -18,7 +18,7 @@ public:
 	// コピー禁止
 	PoolHandle(const PoolHanndle&) = delete;
 
-	// ムーブ禁止
+	// ムーブ可能
 	PoolHandle(PoolHandle&& other) noexcept
 		:obg_(other.obj_), pool_(other.pool_) {
 		other.obj_ = nullptr;
