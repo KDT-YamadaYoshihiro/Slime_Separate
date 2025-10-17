@@ -36,7 +36,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Bomb.h">
+    <ClInclude Include="src\Enemy.h">
       <Filter>ヘッダー ファイル\Bomb</Filter>
     </ClInclude>
     <ClInclude Include="src\enum.h">
@@ -75,9 +75,15 @@
     <ClInclude Include="src\Load.h">
       <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
+    <ClInclude Include="src\ObjectPool.h">
+      <Filter>ヘッダー ファイル\Bomb</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PoolHandle.h">
+      <Filter>ヘッダー ファイル\Bomb</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Bomb.cpp">
+    <ClCompile Include="src\Enemy.cpp">
       <Filter>ソース ファイル\Bomb</Filter>
     </ClCompile>
     <ClCompile Include="src\Ingame.cpp">
@@ -97,6 +103,9 @@
     </ClCompile>
     <ClCompile Include="src\ScreenManager.cpp">
       <Filter>ソース ファイル\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjectPool.cpp">
+      <Filter>ソース ファイル\Bomb</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

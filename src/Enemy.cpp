@@ -1,4 +1,4 @@
-#include "Bomb.h"
+#include "Enemy.h"
 #include "mouse.h"
 #include "DxLib.h"
 
@@ -29,11 +29,7 @@ void Bomb::Update()
 // 描画処理
 void Bomb::Draw(unsigned int arg_Color)
 {
-	//DrawExtendGraph(m_pos_x, m_pos_y, m_pos_x + m_size_x, m_pos_y + m_size_y, m_image_handle, TRUE);
-
-	// 円を描画
-	static const int RADIUS = 20;
-	DrawCircle(m_pos_x, m_pos_y, RADIUS, arg_Color, true);
+	DrawExtendGraph(m_pos_x, m_pos_y, m_pos_x + m_size_x, m_pos_y + m_size_y, m_image_handle, TRUE);
 
 }
 
@@ -101,6 +97,7 @@ void Bomb::StateType()
 		// エネミー本体のイラスト変更。
 
 		// ムーブ状態続行
+		Move();
 
 		break;
 
@@ -120,9 +117,15 @@ void Bomb::Move()
 // ドラック移動
 void Bomb::DrugMove(int arg_mousu_x, int arg_mousu_y)
 {
+	//　マウス座標取得
+	int mouse_x;
+	int mouse_y;
 
-	if()
-
+	GetMousePoint(&mouse_x, &mouse_y);
+	
+	// マウス座標に併せて移動
+	m_pos_x = mouse_x;
+	m_pos_y = mouse_y;
 
 }
 

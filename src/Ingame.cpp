@@ -3,8 +3,11 @@
 
 Ingame::Ingame()
 {
-
+	// 背景
 	bg = std::make_shared<DrawImage>(0, 0, M_BG_SIZE_W, M_BG_SIZE_H, Load::Instance().GetBgGrh());
+
+	// エネミー
+
 
 }
 
