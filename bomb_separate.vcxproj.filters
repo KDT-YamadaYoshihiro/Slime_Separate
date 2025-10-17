@@ -63,7 +63,7 @@
     <ClInclude Include="src\Title.h">
       <Filter>ヘッダー ファイル\screen</Filter>
     </ClInclude>
-    <ClInclude Include="src\mouse.h">
+    <ClInclude Include="src\Mouse.h">
       <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">

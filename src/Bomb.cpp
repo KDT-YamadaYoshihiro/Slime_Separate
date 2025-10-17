@@ -1,4 +1,5 @@
 #include "Bomb.h"
+#include "mouse.h"
 #include "DxLib.h"
 
 // コンストラクタ
@@ -20,12 +21,20 @@ Bomb::Bomb( int image_handle)
 // 更新処理
 void Bomb::Update()
 {
+	
+
+
 }
 
 // 描画処理
-void Bomb::Draw()
+void Bomb::Draw(unsigned int arg_Color)
 {
-	DrawExtendGraph(m_pos_x, m_pos_y, m_pos_x + m_size_x, m_pos_y + m_size_y, m_image_handle, TRUE);
+	//DrawExtendGraph(m_pos_x, m_pos_y, m_pos_x + m_size_x, m_pos_y + m_size_y, m_image_handle, TRUE);
+
+	// 円を描画
+	static const int RADIUS = 20;
+	DrawCircle(m_pos_x, m_pos_y, RADIUS, arg_Color, true);
+
 }
 
 // スタート関数
@@ -100,9 +109,21 @@ void Bomb::StateType()
 	}
 }
 
+// 通常移動
 void Bomb::Move()
 {
 
 
 
 }
+
+// ドラック移動
+void Bomb::DrugMove(int arg_mousu_x, int arg_mousu_y)
+{
+
+	if()
+
+
+}
+
+

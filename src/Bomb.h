@@ -41,7 +41,7 @@ public:
 	void Update();
 
 	// 描画処理
-	void Draw();
+	void Draw(unsigned int arg_color);
 
 	// スタート関数
 	void Start(int pos_x, int pos_y, int size_x, int size_y, int image_handle, EnemyState state_type);
@@ -51,6 +51,9 @@ public:
 
 	// 移動処理
 	void Move();
+
+	// ドラッグ移動
+	void DrugMove(int arg_mousu_x, int arg_mousu_y);
 
 	// 爆発フラグの取得
 	bool GetExplosionFlag() { return m_explosion_flag; }

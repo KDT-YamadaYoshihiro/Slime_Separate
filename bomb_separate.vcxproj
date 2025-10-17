@@ -146,7 +146,7 @@
     <ClInclude Include="src\Load.h" />
     <ClInclude Include="src\ScreenManager.h" />
     <ClInclude Include="src\Ingame.h" />
-    <ClInclude Include="src\mouse.h" />
+    <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\RegionBox.h" />
     <ClInclude Include="src\Result.h" />
     <ClInclude Include="src\ScreenBase.h" />
