@@ -1,7 +1,11 @@
 #pragma once
+#include <stdexcept>
 #include <vector>
 #include <memory>
 #include <stack>
+
+template <typename T>
+class PoolHandle;
 
 template <typename T>
 class ObjectPool {
@@ -39,10 +43,6 @@ public:
             throw std::runtime_error("empty");
         }
 
-        T* obj = free_.top();
-        free_.pop();
-        return PoolHandle<T>(obj, this);
-
         //if (free_.empty()) {
         //    // —á: 2”{‚ÉŠg’£
         //    size_t addCount = std::max<size_t>(1, objects_.size());
@@ -52,11 +52,9 @@ public:
         //    }
         //}
 
-        //T* obj = free_.top();
-        //free_.pop();
-        //return PoolHandle<T>(obj, this);
-
-
+        T* obj = free_.top();
+        free_.pop();
+        return PoolHandle<T>(obj, this);
     }
 
 };

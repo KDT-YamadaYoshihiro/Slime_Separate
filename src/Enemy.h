@@ -1,63 +1,68 @@
 #pragma once
-#include "enum.h"
+#include "DxLib.h"
 
-class Bomb {
+enum class EnemyState {
+    WAIT,
+    MOVE,
+    EXPLOSION,
+    NO_EXPLOSION
+};
 
-	// stateType
-	EnemyState m_state_type;
+class Slime
+{
+private:
+    // 状態管理
+    EnemyState m_state_type;
 
-	// 爆発フラグ
-	bool m_explosion_flag;
+    // 爆発フラグ
+    bool m_explosion_flag;
 
-	// フレーム最大数
-	const int M_FRAME_MAX;	
+    // アニメーションフレーム
+    int m_frame_count;
+    const int M_FRAME_MAX;
 
-	// 移動速度
-	const int M_MOVE_SPEED;
+    // 移動速度
+    const int M_MOVE_SPEED;
+    int m_move_direction; // 0:右, 1:左 など
 
-	// 移動方向
-	int m_move_direction;
+    // 位置・サイズ
+    int m_pos_x, m_pos_y;
+    int m_size_x, m_size_y;
 
-	// 座標
-	int m_pos_x;
-	int m_pos_y;
-
-	// サイズ
-	int m_size_x;
-	int m_size_y;
-
-	// 画像ハンドル
-	int m_image_handle; 
-
-	// フレームカウント
-	int m_frame_count;
+    // 画像ハンドル
+    int m_image_handle;
 
 public:
+    Slime();
 
-	// コンストラクタ
-	Bomb(int image_handle);
+    // 更新処理
+    void Update();
 
-	// 更新処理
-	void Update();
+    // 描画
+    void Draw(unsigned int arg_Color = GetColor(255, 255, 255));
 
-	// 描画処理
-	void Draw(unsigned int arg_color);
+    // 初期化
+    void Start(int pos_x, int pos_y, int size_x, int size_y, int image_handle, EnemyState state_type = EnemyState::WAIT);
 
-	// スタート関数
-	void Start(int pos_x, int pos_y, int size_x, int size_y, int image_handle, EnemyState state_type);
+    // 状態処理
+    void StateType();
 
-	// stateTypeの内容
-	void StateType();
+    // 通常移動
+    void Move();
 
-	// 移動処理
-	void Move();
+    // ドラッグ移動
+    void DragMove();
 
-	// ドラッグ移動
-	void DrugMove(int arg_mousu_x, int arg_mousu_y);
+    // 爆発処理
+    void Explode();
 
-	// 爆発フラグの取得
-	bool GetExplosionFlag() { return m_explosion_flag; }
-	// 爆発フラグの設定
-	void SetExplosionFlag(bool explosion_flag) { m_explosion_flag = explosion_flag; }
+    // 仕分け成功
+    void SetExplosionFlag(bool flag) { m_explosion_flag = flag; }
 
+    // ゲッター
+    int GetX() const { return m_pos_x; }
+    int GetY() const { return m_pos_y; }
+    int GetSizeX() const { return m_size_x; }
+    int GetSizeY() const { return m_size_y; }
+    EnemyState GetState() const { return m_state_type; }
 };
