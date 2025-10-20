@@ -36,7 +36,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Enemy.h">
+    <ClInclude Include="src\Slime.h">
       <Filter>ヘッダー ファイル\Bomb</Filter>
     </ClInclude>
     <ClInclude Include="src\enum.h">
@@ -81,9 +81,12 @@
     <ClInclude Include="src\PoolHandle.h">
       <Filter>ヘッダー ファイル\Bomb</Filter>
     </ClInclude>
+    <ClInclude Include="src\Case.h">
+      <Filter>ヘッダー ファイル\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Enemy.cpp">
+    <ClCompile Include="src\Slime.cpp">
       <Filter>ソース ファイル\Bomb</Filter>
     </ClCompile>
     <ClCompile Include="src\Ingame.cpp">

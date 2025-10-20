@@ -3,7 +3,8 @@
 
 void ScreenManager::Init()
 {
-	ChangeScreen<Ingame>();
+	ChangeScreen<InGame>();
+	m_scrPtr->Init();
 }
 
 void ScreenManager::Update()

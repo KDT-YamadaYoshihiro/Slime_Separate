@@ -1,28 +1,41 @@
 #pragma once
-#include "ScreenBase.h"
 #include "ObjectPool.h"
-#include "Enemy.h"
+#include "ScreenBase.h"
+#include "DrawImage.h"
+#include "Case.h"
+#include "Slime.h"
+#include <vector>
+#include <memory>
 
-class Ingame : public ScreenBase {
+class InGame : public ScreenBase {
 
-	// 2種類のエネミー
-	std::shared_ptr<ObjectPool<Slime>> pool;
+private:
 
-	// 残り時間
-	int frame;
+    ObjectPool<Slime> m_pool;
+    std::vector<std::shared_ptr<Slime>> m_slimes;
 
+    std::shared_ptr<DrawImage> bg = nullptr;
+    std::shared_ptr<CaseArea> m_leftArea = nullptr;
+    std::shared_ptr<CaseArea> m_rightArea = nullptr;
+
+    std::shared_ptr<Slime> m_draggedSlime = nullptr;
+
+    int m_blueImage;
+    int m_redImage;
+
+    int m_spawnTimer;
+    int m_spawnInterval;
+    int m_maxSlime;
+
+    int m_score; // 現在のスコア
 
 public:
-	Ingame();
-	virtual ~Ingame() = default;
-	// 初期化
-	void Init() override;
-	// 更新
-	void Update() override;
-	// 描画
-	void Render() override;
+    InGame();
+    void Init() override;
+    void Update() override;
+    void Render() override;
 
-	// フレームカウント終了
-	bool End();
-
+private:
+    void SpawnSlime();
+    void CheckSort(std::shared_ptr<Slime> slime);
 };

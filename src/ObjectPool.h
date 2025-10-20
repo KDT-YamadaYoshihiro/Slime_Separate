@@ -1,60 +1,37 @@
 #pragma once
-#include <stdexcept>
 #include <vector>
-#include <memory>
 #include <stack>
+#include <memory>
+#include <algorithm>
 
-template <typename T>
-class PoolHandle;
-
-template <typename T>
+template<typename T>
 class ObjectPool {
-
-    // 
-    friend class PoolHandle<T>;
-
-    // 
-    std::vector<std::unique_ptr<T>> objects_;
-    // 
-    std::stack<T*> free_;
-
-    void Release(T* obj) { free_.push(obj); }
-
+    std::vector<std::shared_ptr<T>> objects_;
+    std::stack<std::shared_ptr<T>> free_;
 
 public:
-    explicit ObjectPool(size_t capacity) {
-        objects_.reserve(capacity);
-        for (size_t i = 0; i < capacity; ++i) {
-            objects_.emplace_back(std::make_unique<T>());
-            free_.push(objects_.back().get());
+    ObjectPool(size_t initialCount = 10) {
+        for (size_t i = 0; i < initialCount; i++) {
+            auto obj = std::make_shared<T>();
+            objects_.push_back(obj);
+            free_.push(obj);
         }
     }
 
-    // ＝＝＝＝＝＝＝＝＝＝＝＝
-    // プールがあふれた時の処理
-    // 現状はエラーを返す。
-    // プールを拡張するように変更
-    // ========================
-
-    PoolHandle<T> Acquire() {
-
-        // 
-        if (free_.empty()){
-            throw std::runtime_error("empty");
+    std::shared_ptr<T> Acquire() {
+        if (free_.empty()) {
+            size_t addCount = std::max<size_t>(1, objects_.size());
+            for (size_t i = 0; i < addCount; i++) {
+                auto obj = std::make_shared<T>();
+                objects_.push_back(obj);
+                free_.push(obj);
+            }
         }
-
-        //if (free_.empty()) {
-        //    // 例: 2倍に拡張
-        //    size_t addCount = std::max<size_t>(1, objects_.size());
-        //    for (size_t i = 0; i < addCount; ++i) {
-        //        objects_.emplace_back(std::make_unique<T>());
-        //        free_.push(objects_.back().get());
-        //    }
-        //}
-
-        T* obj = free_.top();
-        free_.pop();
-        return PoolHandle<T>(obj, this);
+        auto obj = free_.top(); free_.pop();
+        return obj;
     }
 
+    void Release(std::shared_ptr<T> obj) {
+        free_.push(obj);
+    }
 };
