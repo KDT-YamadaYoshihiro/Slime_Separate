@@ -11,31 +11,51 @@ class InGame : public ScreenBase {
 
 private:
 
+    // スライムオブジェクトプール
     ObjectPool<Slime> m_pool;
+    // スライムベクター
     std::vector<std::shared_ptr<Slime>> m_slimes;
+    // ドラッグしているスライム
+    std::shared_ptr<Slime> m_dragged_slime = nullptr;
 
+    // 背景
     std::shared_ptr<DrawImage> bg = nullptr;
-    std::shared_ptr<CaseArea> m_leftArea = nullptr;
-    std::shared_ptr<CaseArea> m_rightArea = nullptr;
+    // ケースエリア
+    std::shared_ptr<CaseArea> m_left_area = nullptr;
+    std::shared_ptr<CaseArea> m_right_area = nullptr;
+    
+    static const int repursue = 60;
 
-    std::shared_ptr<Slime> m_draggedSlime = nullptr;
+    // 青スライムの画像ハンドル
+    int m_blue_image;
+    // 赤スライムの画像ハンドル
+    int m_red_image;
+    
+    int elapsed_time;
 
-    int m_blueImage;
-    int m_redImage;
-
-    int m_spawnTimer;
-    int m_spawnInterval;
-    int m_maxSlime;
-
-    int m_score; // 現在のスコア
+    // 経過時間
+    int m_spawn_timer;
+    // スポーン間隔
+    int m_spawn_interval;
+    // 最大同時出現数
+    int m_max_slime;
+    // 同時出現数
+    int m_spawn_slime;
+    // 現在のスコア
+    int m_score;
 
 public:
+    // 初期化
     InGame();
+    // 初期化
     void Init() override;
+    // 更新
     void Update() override;
+    // 描画
     void Render() override;
 
 private:
+    // スライムのスポーン
     void SpawnSlime();
-    void CheckSort(std::shared_ptr<Slime> slime);
+
 };

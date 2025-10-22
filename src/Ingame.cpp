@@ -4,25 +4,42 @@
 #include "DxLib.h"
 #include <algorithm>
 
+// コンストラクタ
 InGame::InGame()
-    : m_blueImage(-1), m_redImage(-1),
-    m_spawnTimer(0), m_spawnInterval(180), m_maxSlime(5), m_score(0)
+    : elapsed_time(repursue * 60),m_blue_image(-1), m_red_image(-1),
+    m_spawn_timer(0), m_spawn_interval(repursue * 8), m_max_slime(1), m_spawn_slime(0), m_score(0)
 {
 }
 
+// 初期化
 void InGame::Init() {
     bg = std::make_shared<DrawImage>(0, 0, 1280, 720, Load::Instance().GetBgGrh());
-    m_leftArea = std::make_shared<CaseArea>(0, 300, 200, 200, 0);
-    m_rightArea = std::make_shared<CaseArea>(1080, 300, 200, 200, 1);
-    m_blueImage = Load::Instance().GetBlueSlimeGrh();
-    m_redImage = Load::Instance().GetRedSlimeGrh();
+    m_left_area = std::make_shared<CaseArea>(0, 300, 200, 200, 0);
+    m_right_area = std::make_shared<CaseArea>(1080, 300, 200, 200, 1);
+    m_blue_image = Load::Instance().GetBlueSlimeGrh();
+    m_red_image = Load::Instance().GetRedSlimeGrh();
 }
-
+// 更新
 void InGame::Update() {
-    m_spawnTimer++;
-    if (m_spawnTimer >= m_spawnInterval && (int)m_slimes.size() < m_maxSlime) {
-        SpawnSlime();
-        m_spawnTimer = 0;
+
+    elapsed_time++;
+
+    if(elapsed_time >= )
+
+    m_spawn_timer++;
+
+    if (m_spawn_timer >= m_spawn_interval ) {
+
+        while (m_spawn_slime < m_max_slime)
+        {
+            SpawnSlime();
+            m_spawn_slime++;
+        }
+
+        m_max_slime++;
+        m_max_slime = min(5, m_max_slime);
+        m_spawn_slime = 0;
+        m_spawn_timer = 0;
     }
 
     int mouse_x, mouse_y;
@@ -30,10 +47,10 @@ void InGame::Update() {
     bool mouseDown = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 
     // ドラッグ開始判定
-    if (!m_draggedSlime && mouseDown) {
+    if (!m_dragged_slime && mouseDown) {
         for (auto& slime : m_slimes) {
             if (!slime->IsDragging() && CheckCircleClick(slime->GetX(), slime->GetY(), 100)) {
-                m_draggedSlime = slime;
+                m_dragged_slime = slime;
                 slime->SetDragging(true);
                 break;
             }
@@ -41,45 +58,45 @@ void InGame::Update() {
     }
 
     // スライム更新
-    m_leftArea->ResetCount();
-    m_rightArea->ResetCount();
+    m_left_area->ResetCount();
+    m_right_area->ResetCount();
 
     for (auto& slime : m_slimes) {
         // ドラッグ中以外は通常更新
-        if (slime != m_draggedSlime) {
+        if (slime != m_dragged_slime) {
             slime->Update();
 
             // Case判定
             int cx = slime->GetX() + slime->GetWidth() / 2;
             int cy = slime->GetY() + slime->GetHeight() / 2;
 
-            bool inLeft = m_leftArea->IsInside(cx, cy);
-            bool inRight = m_rightArea->IsInside(cx, cy);
+            bool inLeft = m_left_area->IsInside(cx, cy);
+            bool inRight = m_right_area->IsInside(cx, cy);
 
             if (inLeft) {
-                slime->SetExplosionFlag(slime->GetType() == m_leftArea->GetType());
-                m_leftArea->AddSlime();
-                m_leftArea->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
+                slime->SetExplosionFlag(slime->GetType() == m_left_area->GetType());
+                m_left_area->AddSlime();
+                m_left_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
             }
             else if (inRight) {
-                slime->SetExplosionFlag(slime->GetType() == m_rightArea->GetType());
-                m_rightArea->AddSlime();
-                m_rightArea->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
+                slime->SetExplosionFlag(slime->GetType() == m_right_area->GetType());
+                m_right_area->AddSlime();
+                m_right_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
             }
             else {
                 // Case外なら通常押し出し
-                m_leftArea->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
-                m_rightArea->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
+                m_left_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
+                m_right_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
             }
         }
     }
 
     // ドラッグ中のスライム移動
-    if (m_draggedSlime) {
-        m_draggedSlime->DrugMove(mouse_x, mouse_y);
+    if (m_dragged_slime) {
+        m_dragged_slime->DrugMove(mouse_x, mouse_y);
         if (!mouseDown) {
-            m_draggedSlime->SetDragging(false);
-            m_draggedSlime = nullptr;
+            m_dragged_slime->SetDragging(false);
+            m_dragged_slime = nullptr;
         }
     }
 
@@ -91,30 +108,31 @@ void InGame::Update() {
     );
 
     // スコア換算
-    m_score = m_leftArea->GetCount() + m_rightArea->GetCount();
+    m_score = m_left_area->GetCount() + m_right_area->GetCount();
 }
 
-
+// 描画
 void InGame::Render() {
     bg->SizeDraw();
-    m_leftArea->Draw();
-    m_rightArea->Draw();
+    m_left_area->Draw();
+    m_right_area->Draw();
 
     for (auto& slime : m_slimes)
         slime->Draw();
 }
 
+// スライムスポーン
 void InGame::SpawnSlime() {
     int type = GetRand(1);
-    int img = (type == 0) ? m_blueImage : m_redImage;
-    int x = GetRand(1180);
-    int y = GetRand(620);
+    int img = (type == 0) ? m_blue_image : m_red_image;
 
-    auto s = m_pool.Acquire(); // shared_ptr
+    int x, y;
+    do {
+        x = GetRand(1180);
+        y = GetRand(620);
+    } while (m_left_area->IsInside(x, y, 100, 100) || m_right_area->IsInside(x, y, 100, 100));
+
+    auto s = m_pool.Acquire();
     s->Start(x, y, 100, 100, img, EnemyState::MOVE, type);
     m_slimes.push_back(s);
-}
-
-void InGame::CheckSort(std::shared_ptr<Slime> slime) {
-    // ここにスコア換算やケース判定を追加可能
 }
