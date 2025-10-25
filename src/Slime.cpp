@@ -9,7 +9,7 @@ Slime::Slime()
     m_explosion_flag(false),
     m_alive(false),
     m_dragging(false),
-    M_FRAME_MAX(600),
+    M_FRAME_MAX(1200),
     M_MOVE_SPEED(2),
     m_move_direction(0),
     m_pos_x(0),

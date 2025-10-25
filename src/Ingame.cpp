@@ -19,6 +19,7 @@ void InGame::Init() {
     m_blue_image = Load::Instance().GetBlueSlimeGrh();
     m_red_image = Load::Instance().GetRedSlimeGrh();
 }
+
 // XV
 void InGame::Update() {
 
@@ -143,7 +144,7 @@ void InGame::SpawnSlime() {
     do {
         x = GetRand(1180);
         y = GetRand(620);
-    } while (m_left_area->IsInside(x, y, 100, 100) || m_right_area->IsInside(x, y, 100, 100));
+    } while (m_left_area->IsInside(x, y, 80, 80) || m_right_area->IsInside(x, y, 100, 100));
 
     auto s = m_pool.Acquire();
     s->Start(x, y, 100, 100, img, EnemyState::MOVE, type);

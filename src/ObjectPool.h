@@ -10,7 +10,7 @@ class ObjectPool {
     std::stack<std::shared_ptr<T>> free_;
 
 public:
-    ObjectPool(size_t initialCount = 10) {
+    ObjectPool(size_t initialCount = 50) {
         for (size_t i = 0; i < initialCount; i++) {
             auto obj = std::make_shared<T>();
             objects_.push_back(obj);
