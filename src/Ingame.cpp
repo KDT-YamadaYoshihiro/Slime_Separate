@@ -22,9 +22,22 @@ void InGame::Init() {
 // XV
 void InGame::Update() {
 
-    elapsed_time++;
+    elapsed_time--;
 
-    if(elapsed_time >= )
+    if (elapsed_time <= repursue * 40) {
+        m_spawn_interval = repursue * 7;
+    }
+    else if (elapsed_time <= repursue * 20) {
+        m_spawn_interval = repursue * 6;
+    }
+    else if (elapsed_time <= repursue * 10) {
+        m_spawn_interval = repursue * 5;
+    }
+    else
+    {
+        m_spawn_interval = repursue * 8;
+
+    }
 
     m_spawn_timer++;
 
