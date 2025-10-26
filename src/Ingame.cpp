@@ -135,78 +135,92 @@ void InGame::SlimeUpdate()
             bool inRight = m_right_area->IsInside(cx, cy);
 
             // 青色ケース
-            if (m_left_area->GetType() == slime->GetType()) {
-                if (!inLeft && slime->GetCheckOutCase()) {
-                    // 自動侵入 → 押し戻す＆方向反射
-                    m_left_area->PushOut(*slime, true);
-                    slime->ReflectDirection();
 
-                }
-                else {
-                    m_left_area->PushOut(*slime, false);
-                    slime->ReflectDirection();
-                    if (m_left_area->CanContainMore()) {
-                        m_left_area->AddSlime();
+            if (inLeft) {
+
+                // スライムとケースが同色であるかどうか
+                if (m_left_area->GetType() == slime->GetType()) {
+
+                    // 左側ケースであり、外にいる判定がfalseになっているとき
+                    if (inLeft && !slime->GetCheckOutCase()) {
+                        // スライムのモードを変更
+                        m_left_area->PushOut(*slime, false);
+                        // 
+                        slime->ReflectDirection();
+                        // ケース内が20未満であるか確認
+                        if (m_left_area->CanContainMore()) {
+                            m_left_area->AddSlime();
+                        }
+                        else {
+                            if (slime->GetStateType() == EnemyState::NO_EXPLOSION) {
+                                slime->SetAlive(false); // プールに返す
+                                m_return_slime++;     // SCORE加算
+                            }
+                        }
+
                     }
                     else {
-                        if (slime->GetStateType() == EnemyState::NO_EXPLOSION) {
-                            slime->SetAlive(false); // プールに返す
-                            m_return_slime++;     // SCORE加算
-                        }
+                        // 自動侵入 → 押し戻す＆方向反射
+                        m_left_area->PushOut(*slime, true);
+                        slime->ReflectDirection();
                     }
-
-                }
-            }
-            else {
-                if (!inLeft && slime->GetCheckOutCase()) {
-                    // 自動侵入 → 押し戻す＆方向反射
-                    m_left_area->PushOut(*slime, true);
-                    slime->ReflectDirection();
                 }
                 else {
-                    // ゲームオーバー
-                    m_phase = RESULT;
-
-                }
-
-            }
-
-            // 赤色ケース
-            if (m_right_area->GetType() == slime->GetType()) {
-
-                if (!inRight && slime->GetCheckOutCase()) {
-                    // 自動侵入 → 押し戻す＆方向反射
-                    m_right_area->PushOut(*slime, true);
-                    slime->ReflectDirection();
-                }
-                else {
-                    m_right_area->PushOut(*slime, false);
-                    slime->ReflectDirection();
-
-                    if (m_right_area->CanContainMore()) {
-                        m_right_area->AddSlime();
+                    if (inLeft && !slime->GetCheckOutCase()) {
+                        // ゲームオーバー
+                        m_phase = RESULT;
                     }
                     else {
-                        if (slime->GetStateType() == EnemyState::NO_EXPLOSION) {
-                            slime->SetAlive(false); // プールに返す
-                            m_return_slime++;     // SCORE加算
-                        }
+
+                        // 自動侵入 → 押し戻す＆方向反射
+                        m_left_area->PushOut(*slime, true);
+                        slime->ReflectDirection();
+
+
                     }
 
                 }
             }
-            else {
+            else if (inRight) {
+                // 赤色ケース
+                if (m_right_area->GetType() == slime->GetType()) {
 
-                if (!inRight && slime->GetCheckOutCase()) {
-                    // 自動侵入 → 押し戻す＆方向反射
-                    m_right_area->PushOut(*slime, true);
-                    slime->ReflectDirection();
+                    if (inRight && !slime->GetCheckOutCase()) {
+                        m_right_area->PushOut(*slime, false);
+                        slime->ReflectDirection();
+
+                        if (m_right_area->CanContainMore()) {
+                            m_right_area->AddSlime();
+                        }
+                        else {
+                            if (slime->GetStateType() == EnemyState::NO_EXPLOSION) {
+                                slime->SetAlive(false); // プールに返す
+                                m_return_slime++;     // SCORE加算
+                            }
+                        }
+
+                    }
+                    else {
+                        // 自動侵入 → 押し戻す＆方向反射
+                        m_right_area->PushOut(*slime, true);
+                        slime->ReflectDirection();
+                    }
                 }
                 else {
-                    // ゲームオーバー
-                    m_phase = RESULT;
-                }
 
+                    if (inRight && !slime->GetCheckOutCase()) {
+                        // ゲームオーバー
+                        m_phase = RESULT;
+                    }
+                    else {
+
+                        // 自動侵入 → 押し戻す＆方向反射
+                        m_right_area->PushOut(*slime, true);
+                        slime->ReflectDirection();
+
+                    }
+
+                }
             }
 
         }
