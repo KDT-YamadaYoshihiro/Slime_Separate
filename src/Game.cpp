@@ -15,7 +15,7 @@ bool CGame::Init()
 	}
 	
 	SetBackgroundColor(0, 0, 0);
-	SetMainWindowText("bomb_separate");
+	SetMainWindowText("slime_separate");
 	if (DxLib_Init() == -1) { return -1; }
 
 	SetDrawScreen(DX_SCREEN_BACK);

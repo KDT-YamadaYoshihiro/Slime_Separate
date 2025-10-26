@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "DxLib.h"
 
+class Slime;
+
 class CaseArea {
 	int x, y, w, h;
 	int targetType; // 0:青, 1:赤
@@ -9,6 +11,8 @@ class CaseArea {
 	int slimeCount = 0; // 中にいるスライム数
 
 public:
+
+	// 初期化
 	CaseArea(int _x, int _y, int _w, int _h, int _type)
 		: x(_x), y(_y), w(_w), h(_h), targetType(_type)
 	{
@@ -20,54 +24,60 @@ public:
 		}
 	}
 
+	// 描画
 	void Draw() const {
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
 		DrawBox(x, y, x + w, y + h, color, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND,0);
 	}
 
+	// 範囲判定
+	bool IsInside(int cx, int cy) const {
+		return (cx >= x && cx <= x + w && cy >= y && cy <= y + h);
+	}
 	bool IsInside(int px, int py, int pw, int ph) const {
 		return (px < x + w && px + pw > x && py < y + h && py + ph > y);
 	}
 
-	void PushOut(float px, float py, float pw, float ph) const {
-		if (!IsInside((int)px, (int)py, (int)pw, (int)ph)) return;
+	// スライムを押し戻す
+	void PushOut(Slime& slime, bool putin) const;
 
-		float overlapLeft = (px + pw) - x;
-		float overlapRight = (x + w) - px;
-		float overlapTop = (py + ph) - y;
-		float overlapBottom = (y + h) - py;
-
-		// std::minを使う
-		float min1 = (std::min)(overlapLeft, overlapRight);   // ← ()で囲むのがポイント
-		float min2 = (std::min)(overlapTop, overlapBottom);
-		float minOverlap = (std::min)(min1, min2);
-
-		if (minOverlap == overlapLeft) {
-			px -= overlapLeft;
-		}
-		else if (minOverlap == overlapRight) {
-			px += overlapRight;
-		}
-		else if (minOverlap == overlapTop) {
-			py -= overlapTop;
-		}
-		else {
-			py += overlapBottom;
-		}
-	}
-
-	bool IsInside(int cx, int cy) const {
-		return (cx >= x && cx <= x + w &&
-			cy >= y && cy <= y + h);
-	}
-
-	bool CanContainMore() const {
+	// ケース内が20未満かチェック
+	bool CanContainMore() const
+	{
 		return slimeCount < 20;
 	}
+	// ケース内のスライムのカウントを増やす
+	void AddSlime()
+	{
+		++slimeCount;
+	}
+	// ケース内のスライムの数を減らす
+	void RemoveSlime() 
+	{
+		if (slimeCount > 0){
+			--slimeCount;
+		}
+	}
+	// カウントをリセット
+	void ResetCount()
+	{
+		slimeCount = 0;
+	}
+	// カウントを取得
+	int GetCount() const
+	{
+		return slimeCount;
+	}
+	// カラータイプの取得
+	int GetType() const
+	{
+		return targetType;
+	}
+	// 座標の取得
+	int GetX() const { return x; }
+	int GetY() const { return y; }
+	int GetW() const { return w; }
+	int GetH() const { return h; }
 
-	void AddSlime() { ++slimeCount; }
-	void RemoveSlime() { if (slimeCount > 0) --slimeCount; }
-	void ResetCount() { slimeCount = 0; }
-	int GetCount() const { return slimeCount; }
-
-	int GetType() const { return targetType; }
 };

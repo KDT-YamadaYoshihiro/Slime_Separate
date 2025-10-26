@@ -6,8 +6,8 @@
 
 // コンストラクタ
 InGame::InGame()
-    : elapsed_time(repursue * 60),m_blue_image(-1), m_red_image(-1),
-    m_spawn_timer(0), m_spawn_interval(repursue * 8), m_max_slime(1), m_spawn_slime(0), m_score(0)
+    : m_phase(TITLE), elapsed_time(M_REFRESH_RATE * 60), m_blue_image(-1), m_red_image(-1),
+    m_spawn_timer(0), m_spawn_interval(M_REFRESH_RATE * 8), m_max_slime(1), m_spawn_slime(0), m_return_slime(0), m_score(0)
 {
 }
 
@@ -18,31 +18,77 @@ void InGame::Init() {
     m_right_area = std::make_shared<CaseArea>(1080, 300, 200, 200, 1);
     m_blue_image = Load::Instance().GetBlueSlimeGrh();
     m_red_image = Load::Instance().GetRedSlimeGrh();
+
+    m_phase = TITLE;
+
 }
 
 // 更新
 void InGame::Update() {
 
-    elapsed_time--;
 
-    if (elapsed_time <= repursue * 40) {
-        m_spawn_interval = repursue * 7;
+    switch (m_phase)
+    {
+    case TITLE:
+
+        if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) { // 左クリックが押された場合
+            m_phase = INGAME;
+        }
+
+
+        break;
+
+    case INGAME:
+
+        // タイム更新
+        TimeUpdate();
+
+        // スライム更新
+        SlimeUpdate();
+
+        // スコア換算
+        m_score = (m_left_area->GetCount() + m_right_area->GetCount() + m_return_slime) * M_SCORE;
+
+
+        break;
+
+    case RESULT:
+
+        if ((GetMouseInput() & MOUSE_INPUT_LEFT) != 0) { // 左クリックが押された場合
+            DxLib_End();
+        }
+
+
+        break;
+    default:
+        break;
     }
-    else if (elapsed_time <= repursue * 20) {
-        m_spawn_interval = repursue * 6;
+
+}
+
+void InGame::SlimeUpdate()
+{
+
+    // 残り時間に合わせてスポーン間隔を短くする
+    if (elapsed_time <= M_REFRESH_RATE * 40) {
+        m_spawn_interval = M_REFRESH_RATE * 7;
     }
-    else if (elapsed_time <= repursue * 10) {
-        m_spawn_interval = repursue * 5;
+    else if (elapsed_time <= M_REFRESH_RATE * 20) {
+        m_spawn_interval = M_REFRESH_RATE * 6;
+    }
+    else if (elapsed_time <= M_REFRESH_RATE * 10) {
+        m_spawn_interval = M_REFRESH_RATE * 5;
     }
     else
     {
-        m_spawn_interval = repursue * 8;
-
+        m_spawn_interval = M_REFRESH_RATE * 8;
     }
 
+    // スポーン間隔カウント
     m_spawn_timer++;
 
-    if (m_spawn_timer >= m_spawn_interval ) {
+    // スポーン間隔が指定数上回ったとき
+    if (m_spawn_timer >= m_spawn_interval) {
 
         while (m_spawn_slime < m_max_slime)
         {
@@ -56,14 +102,16 @@ void InGame::Update() {
         m_spawn_timer = 0;
     }
 
+    // マウス座標を取得
     int mouse_x, mouse_y;
     GetMousePoint(&mouse_x, &mouse_y);
     bool mouseDown = (GetMouseInput() & MOUSE_INPUT_LEFT) != 0;
 
+
     // ドラッグ開始判定
     if (!m_dragged_slime && mouseDown) {
         for (auto& slime : m_slimes) {
-            if (!slime->IsDragging() && CheckCircleClick(slime->GetX(), slime->GetY(), 100)) {
+            if (!slime->IsDragging() && CheckCircleClick(slime->GetX(), slime->GetY(), 80)) {
                 m_dragged_slime = slime;
                 slime->SetDragging(true);
                 break;
@@ -80,34 +128,106 @@ void InGame::Update() {
         if (slime != m_dragged_slime) {
             slime->Update();
 
-            // Case判定
             int cx = slime->GetX() + slime->GetWidth() / 2;
             int cy = slime->GetY() + slime->GetHeight() / 2;
 
             bool inLeft = m_left_area->IsInside(cx, cy);
             bool inRight = m_right_area->IsInside(cx, cy);
 
-            if (inLeft) {
-                slime->SetExplosionFlag(slime->GetType() == m_left_area->GetType());
-                m_left_area->AddSlime();
-                m_left_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
-            }
-            else if (inRight) {
-                slime->SetExplosionFlag(slime->GetType() == m_right_area->GetType());
-                m_right_area->AddSlime();
-                m_right_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
+            // 青色ケース
+            if (m_left_area->GetType() == slime->GetType()) {
+                if (!inLeft && slime->GetCheckOutCase()) {
+                    // 自動侵入 → 押し戻す＆方向反射
+                    m_left_area->PushOut(*slime, true);
+                    slime->ReflectDirection();
+
+                }
+                else {
+                    m_left_area->PushOut(*slime, false);
+                    slime->ReflectDirection();
+                    if (m_left_area->CanContainMore()) {
+                        m_left_area->AddSlime();
+                    }
+                    else {
+                        if (slime->GetStateType() == EnemyState::NO_EXPLOSION) {
+                            slime->SetAlive(false); // プールに返す
+                            m_return_slime++;     // SCORE加算
+                        }
+                    }
+
+                }
             }
             else {
-                // Case外なら通常押し出し
-                m_left_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
-                m_right_area->PushOut(slime->GetX(), slime->GetY(), slime->GetWidth(), slime->GetHeight());
+                if (!inLeft && slime->GetCheckOutCase()) {
+                    // 自動侵入 → 押し戻す＆方向反射
+                    m_left_area->PushOut(*slime, true);
+                    slime->ReflectDirection();
+                }
+                else {
+                    // ゲームオーバー
+                    m_phase = RESULT;
+
+                }
+
             }
+
+            // 赤色ケース
+            if (m_right_area->GetType() == slime->GetType()) {
+
+                if (!inRight && slime->GetCheckOutCase()) {
+                    // 自動侵入 → 押し戻す＆方向反射
+                    m_right_area->PushOut(*slime, true);
+                    slime->ReflectDirection();
+                }
+                else {
+                    m_right_area->PushOut(*slime, false);
+                    slime->ReflectDirection();
+
+                    if (m_right_area->CanContainMore()) {
+                        m_right_area->AddSlime();
+                    }
+                    else {
+                        if (slime->GetStateType() == EnemyState::NO_EXPLOSION) {
+                            slime->SetAlive(false); // プールに返す
+                            m_return_slime++;     // SCORE加算
+                        }
+                    }
+
+                }
+            }
+            else {
+
+                if (!inRight && slime->GetCheckOutCase()) {
+                    // 自動侵入 → 押し戻す＆方向反射
+                    m_right_area->PushOut(*slime, true);
+                    slime->ReflectDirection();
+                }
+                else {
+                    // ゲームオーバー
+                    m_phase = RESULT;
+                }
+
+            }
+
         }
     }
 
-    // ドラッグ中のスライム移動
+    // 
     if (m_dragged_slime) {
+
         m_dragged_slime->DrugMove(mouse_x, mouse_y);
+
+        // 左エリア・右エリアどちらかにいるかチェック
+        if (m_dragged_slime->GetType() == m_left_area->GetType()) {
+            m_dragged_slime->CheckInsideCase(m_left_area->GetX(), m_left_area->GetY(),
+                m_left_area->GetW(), m_left_area->GetH());
+        }
+
+        if (m_dragged_slime->GetType() == m_right_area->GetType()) {
+            m_dragged_slime->CheckInsideCase(m_right_area->GetX(), m_right_area->GetY(),
+                m_right_area->GetW(), m_right_area->GetH());
+        }
+
         if (!mouseDown) {
             m_dragged_slime->SetDragging(false);
             m_dragged_slime = nullptr;
@@ -121,18 +241,17 @@ void InGame::Update() {
         m_slimes.end()
     );
 
-    // スコア換算
-    m_score = m_left_area->GetCount() + m_right_area->GetCount();
 }
 
-// 描画
-void InGame::Render() {
-    bg->SizeDraw();
-    m_left_area->Draw();
-    m_right_area->Draw();
+void InGame::TimeUpdate()
+{
+    // 残り時間
+    elapsed_time--;
 
-    for (auto& slime : m_slimes)
-        slime->Draw();
+    // タイムアップ
+    if (elapsed_time <= 0) {
+        m_phase = RESULT;
+    }
 }
 
 // スライムスポーン
@@ -144,9 +263,59 @@ void InGame::SpawnSlime() {
     do {
         x = GetRand(1180);
         y = GetRand(620);
-    } while (m_left_area->IsInside(x, y, 80, 80) || m_right_area->IsInside(x, y, 100, 100));
+    } while (m_left_area->IsInside(x, y, 80, 80) || m_right_area->IsInside(x, y, 80, 80));
 
     auto s = m_pool.Acquire();
-    s->Start(x, y, 100, 100, img, EnemyState::MOVE, type);
+    s->Start(x, y, 80, 80, img, EnemyState::MOVE, type);
     m_slimes.push_back(s);
 }
+
+// 描画
+void InGame::Render() {
+    // 背景描画
+    bg->SizeDraw();
+
+    switch (m_phase)
+    {
+    case TITLE:
+
+        DrawExtendGraph(0, 0, M_BG_SIZE_W, M_BG_SIZE_H, Load::Instance().GetTitleGrh(), true);
+        DrawGraph(30, 200, Load::Instance().GetStartTexGrh(),true);
+
+        break;
+    case INGAME:
+
+        // ケースの描画
+        m_left_area->Draw();
+        m_right_area->Draw();
+        // スライムの描画
+        for (auto& slime : m_slimes) {
+            slime->Draw();
+        }
+
+        // 現在スコアの表示
+        SetFontSize(M_FONTSIZE);
+        DrawFormatString(30, 30, GetColor(0, 0, 0), "SCORE:%4d", m_score);
+        // 残り時間の表示
+        DrawFormatString(10, 10, GetColor(0, 0, 0), "残り時間:%2d", elapsed_time / M_REFRESH_RATE);
+
+        break;
+    case RESULT:
+
+        // 終了
+        DrawRotaGraph(650, 250, 2.0f, 0.0f,Load::Instance().GetEndGrh(), true);
+        DrawRotaGraph(650, 600, 1.5f, 0.0f, Load::Instance().GetEndTextGrh(), true);
+
+        // SCORE表示
+        SetFontSize(50);
+        DrawFormatString(500, 400, GetColor(0, 0, 0), "SCORE:%4d", m_score);
+
+        break;
+
+    default:
+        break;
+    }
+
+
+}
+

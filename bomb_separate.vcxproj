@@ -157,6 +157,7 @@
     <ClInclude Include="src\Title.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Case.cpp" />
     <ClCompile Include="src\Slime.cpp" />
     <ClCompile Include="src\ObjectPool.cpp" />
     <ClCompile Include="src\Game.cpp" />

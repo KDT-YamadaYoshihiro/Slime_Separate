@@ -55,11 +55,14 @@ private:
     int m_bounce_frame;
     int m_type; // 0:青,1:赤
 
-    // 状態
+    // 方向移動用状態
     float m_dx = 0;
     float m_dy = 0;
-    bool m_flipX = false;
-    bool m_flipY = false;
+    bool m_flip_x = false;
+    bool m_flip_y = false;
+
+    // ケース内にチェック
+    bool m_check_outcase = true;
 
 public:
     // 初期化
@@ -74,11 +77,15 @@ public:
     void DrugMove(int mouse_x, int mouse_y);
     // 座標更新
     void UpdatePosition();
-    // バウンド移動
-    void CheckBoundary();
-    // 
+    // ケース内にいるか判定（ドラッグ後に使用）
+    void CheckInsideCase(float caseX, float caseY, float caseW, float caseH);
+    // 範囲制限（内判定）
+    void CheckBoundary(int  arg_posX, int arg_posY, int arg_sizeW, int arg_sizeH);
+    // 範囲制限（外判定）
+    void PushOutFromRect(float arg_posX, float arg_posY, float arg_sizeW, float arg_sizeH);
+    // 壁に当たったとき
     void ReflectDirection();
-    // 
+    // 方向の再判定
     DIRECTION GetDirectionFromVector(float dx, float dy);
     // フラグセット
     void SetExplosionFlag(bool flag) { m_explosion_flag = flag; }
@@ -98,6 +105,11 @@ public:
     // サイズの取得
     int GetWidth() const { return m_size_x; }
     int GetHeight() const { return m_size_y; }
+    // ステートタイプのセットと取得
+    void SetStateType(EnemyState arg_state) { m_state_type = arg_state; }
+    EnemyState GetStateType() const { return m_state_type; }
+    // ケース内にチェックの取得
+    bool GetCheckOutCase() const { return m_check_outcase; }
 
 private:
     // ステートタイプ別行動

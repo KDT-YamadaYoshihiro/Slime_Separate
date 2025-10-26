@@ -25,19 +25,22 @@
     <Filter Include="ソース ファイル\screen">
       <UniqueIdentifier>{dabeb8f4-ac56-4a91-a6a5-6c9d29b64bee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Bomb">
-      <UniqueIdentifier>{8f10f612-679d-480f-bb4b-0ce2b137e58c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Bomb">
+    <Filter Include="ソース ファイル\Slime">
       <UniqueIdentifier>{d7d57788-ed78-4eeb-b8a4-c80d19c73f28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Stage">
+    <Filter Include="ヘッダー ファイル\Slime">
+      <UniqueIdentifier>{8f10f612-679d-480f-bb4b-0ce2b137e58c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Case">
       <UniqueIdentifier>{8bab3361-056d-4147-b595-80c90f46b1cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Case">
+      <UniqueIdentifier>{216d1f94-6220-4e3d-9a36-88b0be6da5ac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Slime.h">
-      <Filter>ヘッダー ファイル\Bomb</Filter>
+      <Filter>ヘッダー ファイル\Slime</Filter>
     </ClInclude>
     <ClInclude Include="src\enum.h">
       <Filter>ヘッダー ファイル\system</Filter>
@@ -46,10 +49,10 @@
       <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
     <ClInclude Include="src\Stage.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
+      <Filter>ヘッダー ファイル\Case</Filter>
     </ClInclude>
     <ClInclude Include="src\RegionBox.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
+      <Filter>ヘッダー ファイル\Case</Filter>
     </ClInclude>
     <ClInclude Include="src\Ingame.h">
       <Filter>ヘッダー ファイル\screen</Filter>
@@ -76,18 +79,18 @@
       <Filter>ヘッダー ファイル\system</Filter>
     </ClInclude>
     <ClInclude Include="src\ObjectPool.h">
-      <Filter>ヘッダー ファイル\Bomb</Filter>
+      <Filter>ヘッダー ファイル\Slime</Filter>
     </ClInclude>
     <ClInclude Include="src\PoolHandle.h">
-      <Filter>ヘッダー ファイル\Bomb</Filter>
+      <Filter>ヘッダー ファイル\Slime</Filter>
     </ClInclude>
     <ClInclude Include="src\Case.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
+      <Filter>ヘッダー ファイル\Case</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Slime.cpp">
-      <Filter>ソース ファイル\Bomb</Filter>
+      <Filter>ソース ファイル\Slime</Filter>
     </ClCompile>
     <ClCompile Include="src\Ingame.cpp">
       <Filter>ソース ファイル\screen</Filter>
@@ -108,7 +111,10 @@
       <Filter>ソース ファイル\screen</Filter>
     </ClCompile>
     <ClCompile Include="src\ObjectPool.cpp">
-      <Filter>ソース ファイル\Bomb</Filter>
+      <Filter>ソース ファイル\Slime</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Case.cpp">
+      <Filter>ソース ファイル\Case</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
